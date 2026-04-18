@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,500&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-heading: 'Playfair Display', Georgia, serif;
+    --font-body: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+
+    /* Clean editorial light palette */
+    --background: 0 0% 99%;
+    --foreground: 220 20% 8%;
+    --card: 0 0% 100%;
+    --card-foreground: 220 20% 8%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 20% 8%;
+
+    /* Primary = deep navy */
+    --primary: 220 55% 14%;
+    --primary-foreground: 0 0% 98%;
+
+    /* Secondary = warm light gray */
+    --secondary: 220 14% 94%;
+    --secondary-foreground: 220 20% 12%;
+
+    /* Muted — still readable, not washed out */
+    --muted: 220 12% 92%;
+    --muted-foreground: 220 12% 38%;
+
+    /* Accent = emerald green */
+    --accent: 158 64% 32%;
+    --accent-foreground: 0 0% 100%;
+
+    /* Gold = secondary highlight */
+    --gold: 38 90% 50%;
+    --gold-foreground: 220 60% 8%;
+
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 14% 88%;
+    --input: 220 14% 88%;
+    --ring: 158 64% 32%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 220 22% 7%;
+    --foreground: 220 10% 94%;
+    --card: 220 20% 10%;
+    --card-foreground: 220 10% 94%;
+    --popover: 220 20% 10%;
+    --popover-foreground: 220 10% 94%;
+    --primary: 158 64% 42%;
+    --primary-foreground: 220 22% 7%;
+    --secondary: 220 18% 14%;
+    --secondary-foreground: 220 10% 88%;
+    --muted: 220 18% 14%;
+    --muted-foreground: 220 10% 58%;
+    --accent: 158 64% 42%;
+    --accent-foreground: 220 22% 7%;
+    --gold: 38 90% 54%;
+    --gold-foreground: 220 60% 8%;
+    --destructive: 0 62% 40%;
+    --destructive-foreground: 0 0% 98%;
+    --border: 220 18% 18%;
+    --input: 220 18% 18%;
+    --ring: 158 64% 42%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground font-body;
+    font-feature-settings: "kern" 1, "liga" 1;
+    -webkit-font-smoothing: antialiased;
+  }
+}
+
+/* Typography utilities */
+.font-heading { font-family: var(--font-heading); }
+.font-body    { font-family: var(--font-body); }
+.font-mono    { font-family: var(--font-mono); }
+.font-playfair { font-family: var(--font-heading); }
+
+/* Article prose */
+.prose-trading { max-width: 68ch; }
+.prose-trading h1 { @apply font-heading text-3xl md:text-4xl font-bold mb-6 leading-tight text-foreground; }
+.prose-trading h2 { @apply font-heading text-2xl md:text-3xl font-bold mt-12 mb-5 leading-tight text-foreground; }
+.prose-trading h3 { @apply font-heading text-xl md:text-2xl font-semibold mt-8 mb-3 text-foreground; }
+.prose-trading p  { @apply font-body text-base md:text-lg leading-[1.8] mb-6 text-foreground/80; }
+.prose-trading ul,
+.prose-trading ol { @apply mb-6 pl-6 space-y-2; }
+.prose-trading li { @apply font-body text-base md:text-lg leading-relaxed text-foreground/80; }
+.prose-trading blockquote {
+  @apply border-l-4 border-accent pl-6 py-3 my-8 bg-accent/5 rounded-r-lg;
+}
+.prose-trading blockquote p { @apply text-foreground font-medium italic mb-0; }
+.prose-trading pre  { @apply bg-muted rounded-lg p-4 my-6 overflow-x-auto font-mono text-sm; }
+.prose-trading code { @apply font-mono text-sm bg-muted px-1.5 py-0.5 rounded text-foreground; }
+.prose-trading pre code { @apply bg-transparent p-0; }
+.prose-trading img  { @apply rounded-xl my-8 w-full; }
+.prose-trading a    { @apply text-accent underline underline-offset-4 hover:text-accent/80 transition-colors; }
+.prose-trading table { @apply w-full my-6 border-collapse; }
+.prose-trading th   { @apply text-left font-semibold p-3 border-b-2 border-border text-foreground; }
+.prose-trading td   { @apply p-3 border-b border-border text-foreground/80; }
+.prose-trading strong { @apply font-semibold text-foreground; }
+.prose-trading hr   { @apply my-10 border-border; }
+
+/* Shared component primitives */
+.btn-gold {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-accent text-accent-foreground
+         px-5 py-2.5 text-sm font-semibold transition-all duration-200
+         hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+}
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-primary text-primary-foreground
+         px-5 py-2.5 text-sm font-semibold transition-all duration-200
+         hover:bg-primary/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+}
+.btn-accent {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg bg-accent text-accent-foreground
+         px-5 py-2.5 text-sm font-semibold transition-all duration-200
+         hover:bg-accent/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+}
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg text-foreground/70
+         px-4 py-2 text-sm font-medium transition-colors duration-200
+         hover:text-foreground hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+}
+.btn-outline {
+  @apply inline-flex items-center justify-center gap-2 rounded-lg border border-border text-foreground
+         px-5 py-2.5 text-sm font-semibold transition-all duration-200
+         hover:bg-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring;
+}
+
+/* Tag badge */
+.tag-badge {
+  @apply inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider;
+}
+
+/* Form field base */
+.field-input {
+  @apply w-full rounded-lg border border-border bg-background px-4 py-3 text-sm text-foreground
+         placeholder:text-muted-foreground transition-shadow duration-200
+         focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent;
+}
+
+/* Fade-in keyframe */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in { animation: fadeIn 0.2s ease-out both; }
+
+/* Shake animation for errors */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+.animate-shake { animation: shake 0.2s ease-in-out 0s 2; }
+
+/* Section divider */
+.section-label {
+  @apply text-xs font-semibold uppercase tracking-[0.12em] text-muted-foreground;
+}
