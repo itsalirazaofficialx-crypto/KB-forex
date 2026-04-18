@@ -9,9 +9,13 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = (supabaseUrl && supabaseAnonKey) 
   ? createBrowserClient(supabaseUrl, supabaseAnonKey)
-  : null;
+  : (null as any as ReturnType<typeof createBrowserClient>);
 
 export const uploadImage = async (file: File) => {
+  if (!supabase) {
+    throw new Error('Supabase client is not initialized. Please check your environment variables.');
+  }
+
   const fileExt = file.name.split('.').pop();
   const fileName = `${Math.random()}.${fileExt}`;
   const filePath = `posts/${fileName}`;
