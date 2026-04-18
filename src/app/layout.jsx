@@ -2,6 +2,7 @@ import './globals.css';
 import { Providers } from '@/components/Providers';
 
 export const metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://kbforex.com'),
   title: {
     default: 'KB Forex | Market Analysis & Trading Strategy',
     template: '%s | KB Forex'

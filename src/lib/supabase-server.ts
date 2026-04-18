@@ -9,21 +9,29 @@ export function createSupabaseMiddlewareClient(
   request: NextRequest,
   response: NextResponse,
 ) {
-  return createServerClient(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-    {
-      cookies: {
-        getAll() {
-          return request.cookies.getAll();
-        },
-        setAll(cookiesToSet) {
-          cookiesToSet.forEach(({ name, value, options }) => {
-            request.cookies.set(name, value);
-            response.cookies.set(name, value, options);
-          });
-        },
+  const url = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+
+  if (!url || !key) {
+    // In production build phase, this might be empty. 
+    // Return a dummy client or handle it to prevent build crash.
+    return {
+      auth: { getSession: async () => ({ data: { session: null } }) },
+      from: () => ({ select: () => ({ eq: () => ({ single: () => ({ data: null }) }) }) })
+    } as any;
+  }
+
+  return createServerClient(url, key, {
+    cookies: {
+      getAll() {
+        return request.cookies.getAll();
+      },
+      setAll(cookiesToSet) {
+        cookiesToSet.forEach(({ name, value, options }) => {
+          request.cookies.set(name, value);
+          response.cookies.set(name, value, options);
+        });
       },
     },
-  );
+  });
 }
